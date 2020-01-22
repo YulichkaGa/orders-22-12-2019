@@ -1,0 +1,53 @@
+<dx-data-grid id="gridContainer" (onRowInserted)="onDataSourceChanged($event)"
+  [dataSource]="events" [masterDetail]="{ enabled: true, template: 'detail' }" keyExpr="ID" [showBorders]="true" >
+  <dxi-column dataField="EventDate" dataType="date"></dxi-column>
+  <dxi-column dataField="EventName"></dxi-column>
+  <dxi-column dataField="Location"></dxi-column>
+  <dxi-column dataField="AmountPlaces" [width]="125"></dxi-column>
+  <dxi-column dataField="AvailablePlaces" [width]="125"></dxi-column>
+
+
+  <dxo-editing [allowDeleting]="true"[allowAdding]="true" [selectTextOnEditStart]="true" [useIcons]="true">
+  </dxo-editing>
+
+
+  <dxo-header-filter [visible]="true">
+  </dxo-header-filter>
+
+  <dxo-filter-panel [visible]="true">
+  </dxo-filter-panel>
+
+  <dxo-filter-row [visible]="true">
+  </dxo-filter-row>
+
+  <dxo-paging [pageSize]="10">
+  </dxo-paging>
+
+
+  <div *dxTemplate="let order of 'detail'">
+    <dx-data-grid [dataSource]="getOrders(order.key)" [showBorders]="true" >
+      <dxo-paging [pageSize]="5"></dxo-paging>
+
+      <dxi-column dataField="ClientName"></dxi-column>
+
+      <dxi-column dataField="NumberOrderPlaces"></dxi-column>
+      <dxo-editing [allowUpdating]="true" [allowDeleting]="true" [selectTextOnEditStart]="true" [useIcons]="true" [allowAdding]="true">
+      </dxo-editing>
+
+      <dxo-header-filter [visible]="true">
+      </dxo-header-filter>
+
+      <dxo-filter-panel [visible]="true">
+      </dxo-filter-panel>
+
+      <dxo-filter-row [visible]="true">
+      </dxo-filter-row>
+      <dxo-summary>
+        <dxi-total-item column="ClientName" summaryType="count">
+          <dxo-value-format format="currency" [precision]="1"></dxo-value-format>
+        </dxi-total-item>
+        <dxi-total-item column="NumberOrderPlaces" summaryType="sum"></dxi-total-item>
+      </dxo-summary>
+    </dx-data-grid>
+  </div>
+</dx-data-grid>
